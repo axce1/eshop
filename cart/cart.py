@@ -6,9 +6,10 @@ from shop.models import Product
 class Cart(object):
     def __init__(self, request):
         self.session = request.session
-        cart = self.session.get(settings.CART_SESSION_ID)
+        #cart = self.session.get(settings.CART_SESSION_ID)
+        cart = self.session.get(self.session.session_key)
         if not cart:
-            cart = self.session[settings.CART_SESSION_ID] = {}
+            cart = self.session[self.session.session_key] = {}
         self.cart = cart
 
     def __iter__(self):

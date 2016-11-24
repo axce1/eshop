@@ -1,13 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 
+from cart.forms import CartAddProductForm
 from .models import Category, Product
 
 
 class ProductListView(ListView):
     model = Product
     template_name = 'shop/product/list.html'
-
 
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
@@ -26,9 +26,12 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'
     template_name = 'shop/product/detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetailView, self).get_context_data(**kwargs)
+        context['cart_product_form'] = CartAddProductForm
+        return context
+
     def get_object(self):
-        print('sdfsdf')
-        print(self.kwargs.get("id"))
         return get_object_or_404(Product,
                                  id=self.kwargs.get("id"),
                                  slug=self.kwargs.get("slug"),
