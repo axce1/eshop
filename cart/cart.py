@@ -38,7 +38,7 @@ class Cart(object):
         self.save()
 
     def save(self):
-        self.session[settings.CART_SESSION_ID] = self.cart
+        self.session[self.session.session_key] = self.cart
         self.session.modified = True
 
     def remove(self, product):
@@ -51,5 +51,5 @@ class Cart(object):
         return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
 
     def clear(self):
-        del self.session[settings.CART_SESSION_ID]
+        del self.session[self.session.session_key]
         self.session.modified = True

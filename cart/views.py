@@ -10,6 +10,7 @@ class CartAddView(View):
 
     def post(self, request, *args, **kwargs):
         cart = Cart(request)
+        # FIXME use form_class
         form = CartAddProductForm(request.POST)
         product_id = self.kwargs.get("product_id")
         product = get_object_or_404(Product, id=product_id)
