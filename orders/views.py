@@ -1,19 +1,10 @@
-<<<<<<< HEAD
-from django.shortcuts import render
-from django.views.generic.edit import FormView
-
-from .models import OrderItem
-from .forms import OrderCreateForm
-from cart.cart import Cart
-from .tasks import order_created
-=======
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic.edit import FormView
 from .models import OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
->>>>>>> feature/payments
+from .tasks import order_created
 
 
 class OrderCreateForm(FormView):
