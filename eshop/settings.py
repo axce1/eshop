@@ -37,10 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_extensions',
+
+    'paypal.standard.ipn',
+
     'shop',
     'cart',
     'orders',
+    'payment',
+
+    'django_extensions',
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -128,4 +134,11 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+<<<<<<< HEAD
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+=======
+# django-paypal settings
+PAYPAL_RECEIVER_EMAIL = os.environ.get('PAYPAL_RECEIVER_MAIL')
+PAYPAL_TEST = True
+
+>>>>>>> feature/payments

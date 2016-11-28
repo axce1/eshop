@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.shortcuts import render
 from django.views.generic.edit import FormView
 
@@ -5,6 +6,14 @@ from .models import OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
 from .tasks import order_created
+=======
+from django.shortcuts import redirect
+from django.urls import reverse
+from django.views.generic.edit import FormView
+from .models import OrderItem
+from .forms import OrderCreateForm
+from cart.cart import Cart
+>>>>>>> feature/payments
 
 
 class OrderCreateForm(FormView):
@@ -13,7 +22,6 @@ class OrderCreateForm(FormView):
 
     def form_valid(self, form):
         cart = Cart(self.request)
-        print(cart)
         order = form.save()
         for item in cart:
             OrderItem.objects.create(
@@ -26,7 +34,7 @@ class OrderCreateForm(FormView):
 
         # start task
         order_created.delay(order.id)
+        self.request.session['order_id'] = order.id
 
-        return render(self.request,
-                      'orders/order/created.html',
-                      {'order': order})
+        return redirect(reverse('payment:process'))
+
