@@ -1,10 +1,9 @@
-from django.shortcuts import render
-from django.views.generic.edit import FormView
 from django.shortcuts import redirect
+from django.urls import reverse
+from django.views.generic.edit import FormView
 from .models import OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
-from shop.models import Product
 
 
 class OrderCreateForm(FormView):
@@ -13,7 +12,6 @@ class OrderCreateForm(FormView):
 
     def form_valid(self, form):
         cart = Cart(self.request)
-        print(cart)
         order = form.save()
         for item in cart:
             OrderItem.objects.create(
@@ -24,6 +22,7 @@ class OrderCreateForm(FormView):
             )
         cart.clear()
 
-        return render(self.request,
-                      'orders/order/created.html',
-                      {'order': order})
+        self.request.session['order_id'] = order.id
+
+        return redirect(reverse('payment:process'))
+

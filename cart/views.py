@@ -17,7 +17,6 @@ class CartAddView(View):
 
         if form.is_valid():
             cd = form.cleaned_data
-            print(cd)
             cart.add(product=product,
                      quantity=cd['quantity'],
                      update_quantity=cd['update'])
