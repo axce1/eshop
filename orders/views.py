@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.views.generic.edit import FormView
-from django.shortcuts import redirect
+
 from .models import OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
-from shop.models import Product
+from .tasks import order_created
 
 
 class OrderCreateForm(FormView):
@@ -23,6 +23,9 @@ class OrderCreateForm(FormView):
                 quantity = item['quantity']
             )
         cart.clear()
+
+        # start task
+        order_created.delay(order.id)
 
         return render(self.request,
                       'orders/order/created.html',
