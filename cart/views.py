@@ -1,9 +1,11 @@
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import TemplateView
+from django.views.generic.base import View
+
 from shop.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
-from django.views.generic.base import View
+from coupons.forms import CouponApplyForm
 
 
 class CartAddView(View):
@@ -44,5 +46,6 @@ class CartDetailView(TemplateView):
                 initial={'quantity': item['quantity'],
                          'update': True})
         context['cart'] = cart
+        context['coupon_apply_form'] = CouponApplyForm()
 
         return context
