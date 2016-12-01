@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.conf import settings
 from decimal import Decimal
+from datetime import datetime
 
 from paypal.standard.forms import PayPalPaymentsForm
 
@@ -18,7 +19,7 @@ def payment_process(request):
         'business': settings.PAYPAL_RECEIVER_EMAIL,
         'amount': '%.2f' % order.get_total_cost().quantize(Decimal('.01')),
         'item_name': 'Order {}'.format(order.id),
-        'invoice': str(order.id),
+        'invoice': int(datetime.now().timestamp()),
         'currency_code': 'USD',
         'notify_url': 'http://{}{}'.format(host,
                                            reverse('paypal-ipn')),
