@@ -15,6 +15,6 @@ def order_created(order_id):
                                                                           order.id)
     mail_sent = send_mail(subject,
                           message,
-                          'crazyman2004@list.ru',
+                          'test@example.com',
                           [order.email])
     return mail_sent

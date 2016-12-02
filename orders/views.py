@@ -1,6 +1,7 @@
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic.edit import FormView
+
 from .models import OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
@@ -25,7 +26,6 @@ class OrderCreateForm(FormView):
             order.discount = cart.coupon.discount
         order.save()
         for item in cart:
-            print(item['product'])
             OrderItem.objects.create(
                 order=order,
                 product=item['product'],

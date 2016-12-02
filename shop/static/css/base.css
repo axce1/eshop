@@ -296,6 +296,7 @@ ul.errorlist {
 
 .recommendations p {
     clear:both;
+    text-align: center;
 }
 
 .recommendations.cart {

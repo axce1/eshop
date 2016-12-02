@@ -8,6 +8,7 @@ rconn = redis.StrictRedis(host=settings.REDIS_HOST,
                          port=settings.REDIS_PORT,
                          db=settings.REDIS_DB)
 
+
 class Recommender(object):
 
     def get_product_key(self, id):
@@ -16,7 +17,7 @@ class Recommender(object):
     def products_bought(self, products):
         product_ids = [p.id for p in products]
         for product_id in product_ids:
-            for with_id in product_id:
+            for with_id in product_ids:
                 if product_id != with_id:
                     rconn.zincrby(self.get_product_key(product_id), with_id, amount=1)
 
