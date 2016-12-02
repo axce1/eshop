@@ -7,6 +7,7 @@ from shop.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
 from coupons.forms import CouponApplyForm
+from shop.recommender import Recommender
 
 
 class CartAddView(FormView):
@@ -16,7 +17,6 @@ class CartAddView(FormView):
         cart = Cart(self.request)
         product_id = self.kwargs.get("product_id")
         product = get_object_or_404(Product, id=product_id)
-
 
         cd = form.cleaned_data
         cart.add(product=product,
@@ -47,5 +47,8 @@ class CartDetailView(TemplateView):
                          'update': True})
         context['cart'] = cart
         context['coupon_apply_form'] = CouponApplyForm()
+        r = Recommender()
+        cart_products = [item['product'] for item in cart]
+        context['recommended_products'] = r.suggest_products_for(cart_products, 4)
 
         return context
