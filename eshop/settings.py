@@ -137,6 +137,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# django-paypal settings
+
+####### django-paypal settings
 PAYPAL_RECEIVER_EMAIL = os.environ.get('PAYPAL_RECEIVER_MAIL')
 PAYPAL_TEST = True
+
+####### redis #############
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 1
