@@ -11,6 +11,12 @@ class OrderCreateForm(FormView):
     form_class = OrderCreateForm
     template_name = 'orders/order/create.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        cart = Cart(self.request)
+        if not cart.cart:
+            return redirect('/')
+        return super().dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
         cart = Cart(self.request)
         order = form.save(commit=False)
@@ -19,11 +25,12 @@ class OrderCreateForm(FormView):
             order.discount = cart.coupon.discount
         order.save()
         for item in cart:
+            print(item['product'])
             OrderItem.objects.create(
                 order=order,
-                product = item['product'],
-                price = item['price'],
-                quantity = item['quantity']
+                product=item['product'],
+                price=item['price'],
+                quantity=item['quantity']
             )
         cart.clear()
 
