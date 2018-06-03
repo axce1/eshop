@@ -15,7 +15,7 @@ class ProductListView(ListView):
         context['category'] = None
         context['categories'] = Category.objects.all()
         context['products'] = Product.objects.filter(available=True)
-        category_slug = self.request.GET.get("category_slug")
+        category_slug = self.kwargs.get("slug")
         if category_slug:
             context['category'] = get_object_or_404(Category, slug=category_slug)
             context['products'] = Product.objects.filter(category=context['category'], available=True)

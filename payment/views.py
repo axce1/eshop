@@ -19,7 +19,7 @@ def payment_process(request):
         'business': settings.PAYPAL_RECEIVER_EMAIL,
         'amount': '%.2f' % order.get_total_cost().quantize(Decimal('.01')),
         'item_name': 'Order {}'.format(order.id),
-        'invoice': int(datetime.now().timestamp()),
+        'invoice': str(order.id),
         'currency_code': 'USD',
         'notify_url': 'http://{}{}'.format(host,
                                            reverse('paypal-ipn')),

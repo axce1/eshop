@@ -32,11 +32,20 @@ class CartRemoveView(View):
         product_id = self.kwargs.get("product_id")
         product = get_object_or_404(Product, id=product_id)
         cart.remove(product)
-        return redirect('cart:cart_detail')
+        if cart:
+            return redirect('cart:cart_detail')
+        return redirect('/')
 
 
 class CartDetailView(TemplateView):
     template_name = 'cart/detail.html'
+
+    def get(self, request, **kwargs):
+        cart = Cart(request)
+        if len(cart) == 0:
+            return redirect('/')
+        context = self.get_context_data()
+        return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super(CartDetailView, self).get_context_data(**kwargs)
