@@ -1,0 +1,10 @@
+image: python3.6
+
+stages:
+  - check
+
+flake8:
+  stage: check
+  script:
+    - pip install flake8
+    - flake8
