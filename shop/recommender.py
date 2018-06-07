@@ -5,8 +5,8 @@ from .models import Product
 
 
 rconn = redis.StrictRedis(host=settings.REDIS_HOST,
-                         port=settings.REDIS_PORT,
-                         db=settings.REDIS_DB)
+                          port=settings.REDIS_PORT,
+                          db=settings.REDIS_DB)
 
 
 class Recommender(object):

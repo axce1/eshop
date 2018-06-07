@@ -3,7 +3,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.conf import settings
 from decimal import Decimal
-from datetime import datetime
 
 from paypal.standard.forms import PayPalPaymentsForm
 

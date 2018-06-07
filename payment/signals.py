@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from paypal.standard.models import ST_PP_PROCESSED, ST_PP_PENDING
+from paypal.standard.models import ST_PP_PROCESSED, ST_PP_PENDING  # noqa: F401
 from paypal.standard.ipn.signals import valid_ipn_received
 
 from orders.models import Order
@@ -12,5 +12,6 @@ def handler_payment(sender, **kwargs):
         order = get_object_or_404(Order, id=ipn_obj.invoice)
         order.paid = True
         order.save()
+
 
 valid_ipn_received.connect(handler_payment)

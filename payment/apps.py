@@ -6,4 +6,4 @@ class PaymentConfig(AppConfig):
     verbose_name = 'Payment'
 
     def ready(self):
-        import payment.signals
+        import payment.signals  # noqa: F401

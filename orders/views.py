@@ -39,4 +39,3 @@ class OrderCreateForm(FormView):
         self.request.session['order_id'] = order.id
 
         return redirect(reverse('payment:process'))
-

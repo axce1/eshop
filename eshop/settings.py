@@ -88,8 +88,6 @@ WSGI_APPLICATION = 'eshop.wsgi.application'
 
 DATABASES = {
     'default': {
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'eshop',
         'USER': 'root',
@@ -141,24 +139,25 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
-####### django-paypal settings
-#PAYPAL_RECEIVER_EMAIL = os.environ.get('PAYPAL_RECEIVER_MAIL')
-PAYPAL_RECEIVER_EMAIL="4i125662y0@cartelera.org"
+# django-paypal settings #############
+# PAYPAL_RECEIVER_EMAIL = os.environ.get('PAYPAL_RECEIVER_MAIL')
+PAYPAL_RECEIVER_EMAIL = "4i125662y0@cartelera.org"
 PAYPAL_TEST = True
 
-#personal paypal -- kaca@nickrizos.com
-#4453871958365361
-#04/21
-#cvv 182
+# personal paypal -- kaca@nickrizos.com
+# 4453871958365361
+# 04/21
+# cvv 182
 # paypal@yk20.com
-####### redis #############
+
+# redis #############
 REDIS_HOST = 'redis'
 REDIS_PORT = 6379
 REDIS_DB = 0
 
-####### Celery ############
+# Celery ############
 CELERY_BROKER_URL = 'redis://redis:6379/0'
 CELERY_BACKEND = 'redis://redis:6379/0'
