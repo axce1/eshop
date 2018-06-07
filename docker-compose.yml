@@ -10,6 +10,7 @@ services:
     volumes:
       - ./code:/code
       - ./compose/config/nginx:/etc/nginx/conf.d
+      - /code/static:/code/static
     depends_on:
       - web
 
@@ -34,6 +35,7 @@ services:
         #command: /start-dev.sh
     volumes:
       - .:/code
+      - /code/static:/code/static
     expose:
       - 8000
     links:

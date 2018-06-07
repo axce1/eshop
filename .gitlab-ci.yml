@@ -1,0 +1,64 @@
+image: python:latest
+
+
+services:
+  - docker:dind
+
+
+stages:
+  - check
+  - test
+  - build
+
+
+variables:
+  MYSQL_DATABASE: eshop
+  MYSQL_ROOT_PASSWORD: mypass
+  MYSQL_USER: root
+  
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache"
+  
+  CONTAINER_TEST_IMAGE: registry.git.miac.lan/popovei/eshop:$CI_BUILD_REF_NAME
+  CONTAINER_RELEASE_IMAGE: registry.git.miac.lan/popovei/eshop:latest
+
+
+cache:
+  paths:
+    - .cache/pip
+
+
+build:
+  stage: build
+
+  image: docker:git
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+  script:
+    - docker build -t $CONTAINER_TEST_IMAGE .
+    - docker push $CONTAINER_TEST_IMAGE
+  only:
+    - master
+
+
+flake8:
+  stage: check
+
+  before_script:
+    - pip install -U flake8
+  script:
+    - flake8
+
+
+test:
+  stage: test
+
+  services:
+    - name: dnhsoft/mysql-utf8:5.7
+      alias: mysql
+  before_script:
+    - pip install -Ur requirements.txt
+  script:
+    - coverage run --source='.' manage.py test 
+    - coverage report

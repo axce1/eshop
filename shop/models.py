@@ -44,10 +44,9 @@ class Product(BaseModel):
 
     class Meta:
         ordering = ('name',)
-        index_together  = (('id', 'slug'),)
+        index_together = (('id', 'slug'),)
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
-
 
     def __str__(self):
         return self.name

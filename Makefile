@@ -36,3 +36,6 @@ log-db:
 
 collectstatic:
 	docker exec eshop_django /bin/sh -c "python manage.py collectstatic --noinput"
+
+test:
+	docker-compose run --rm web /bin/sh -c "coverage run --source='.' manage.py test && coverage report"
