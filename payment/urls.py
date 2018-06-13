@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from paymant import views
+from payment import views
 
 
 urlpatterns = [
