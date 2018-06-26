@@ -23,6 +23,8 @@ def export_to_csv(modeladmin, request, queryset):
             data_row.append(value)
         writer.writerow(data_row)
     return response
+
+
 export_to_csv.short_description = 'Export to CSV'
 
 
@@ -38,5 +40,6 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
     actions = [export_to_csv]
+
 
 admin.site.register(Order, OrderAdmin)

@@ -25,7 +25,7 @@ SECRET_KEY = '=nchvtlly@t1tswc+nllh$vhba492xuoakb_+%dp$cv=$y%)*7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -50,7 +50,7 @@ INSTALLED_APPS = [
 
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -88,8 +88,16 @@ WSGI_APPLICATION = 'eshop.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'eshop',
+        'USER': 'root',
+        'PASSWORD': 'mypass',
+        'HOST': 'mysql',
+        'OPTIONS': {
+            'init_command': 'SET '
+                'character_set_connection=utf8mb4,'
+                'collation_connection=utf8mb4_unicode_ci'
+        }
     }
 }
 
@@ -131,12 +139,30 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# django-paypal settings
-PAYPAL_RECEIVER_EMAIL = os.environ.get('PAYPAL_RECEIVER_MAIL')
+
+# django-paypal settings #############
+# PAYPAL_RECEIVER_EMAIL = os.environ.get('PAYPAL_RECEIVER_MAIL')
+PAYPAL_RECEIVER_EMAIL = "4i125662y0@cartelera.org"
 PAYPAL_TEST = True
+
+# personal paypal -- kaca@nickrizos.com
+# 4453871958365361
+# 04/21
+# cvv 182
+# paypal@yk20.com
+
+# redis #############
+REDIS_HOST = 'redis'
+REDIS_PORT = 6379
+REDIS_DB = 0
+
+# Celery ############
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_BACKEND = 'redis://redis:6379/0'

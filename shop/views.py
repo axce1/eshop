@@ -3,6 +3,7 @@ from django.views.generic import ListView, DetailView
 
 from cart.forms import CartAddProductForm
 from .models import Category, Product
+from .recommender import Recommender
 
 
 class ProductListView(ListView):
@@ -14,7 +15,7 @@ class ProductListView(ListView):
         context['category'] = None
         context['categories'] = Category.objects.all()
         context['products'] = Product.objects.filter(available=True)
-        category_slug = self.request.GET.get("category_slug")
+        category_slug = self.kwargs.get("slug")
         if category_slug:
             context['category'] = get_object_or_404(Category, slug=category_slug)
             context['products'] = Product.objects.filter(category=context['category'], available=True)
@@ -29,6 +30,8 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         context['cart_product_form'] = CartAddProductForm
+        r = Recommender()
+        context['recommended_products'] = r.suggest_products_for([self.get_object()], 4)
         return context
 
     def get_object(self):

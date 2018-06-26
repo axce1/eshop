@@ -107,3 +107,7 @@ ENV/
 *.iml
 out
 gen
+
+
+datavolume/
+static/

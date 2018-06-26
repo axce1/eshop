@@ -14,17 +14,12 @@ class CouponApplyView(View):
         now = timezone.now()
 
         if form.is_valid():
-            print('sdfdsf')
             cd = form.cleaned_data
-            print(cd['code'])
-            print(now)
             try:
                 coupon = Coupon.objects.get(code__iexact=cd['code'],
                                             valid_from__lte=now,
                                             valid_to__gte=now,
                                             active=True)
-                print(coupon)
-
                 request.session['coupon_id'] = coupon.id
             except Coupon.DoesNotExist:
                 request.session['coupon_id'] = None
