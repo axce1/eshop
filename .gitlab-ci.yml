@@ -18,8 +18,8 @@ variables:
   
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache"
   
-  CONTAINER_TEST_IMAGE: registry.git.miac.lan/popovei/eshop:$CI_BUILD_REF_NAME
-  CONTAINER_RELEASE_IMAGE: registry.git.miac.lan/popovei/eshop:latest
+  CONTAINER_TEST_IMAGE: registry.gitlab.com/axcel/eshop:$CI_BUILD_REF_NAME
+  CONTAINER_RELEASE_IMAGE: registry.gitlab.com/axcel/eshop:latest
 
 
 cache:
@@ -36,7 +36,7 @@ build:
   before_script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   script:
-    - docker build -t $CONTAINER_TEST_IMAGE .
+    - docker build -t $CONTAINER_TEST_IMAGE -f ./compose/django/dockerfile .
     - docker push $CONTAINER_TEST_IMAGE
   only:
     - master
